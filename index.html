@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>twitch-embeded</title>
+    <style>
+      #search-box {
+        margin-bottom: 1rem;
+      }
+      #twitch-embed iframe {
+        border: 1mm ridge rgba(170, 50, 220, 0.6);
+      }
+      #twitch-id {
+        height: 17px;
+      }
+      #show-twitch {
+        vertical-align: middle;
+      }
+    </style>
+    <script src="https://player.twitch.tv/js/embed/v1.js"></script>
+  </head>
+  <body>
+    <div id="search-box">
+      <input id="twitch-id" />
+      <button id="show-twitch"></button>
+    </div>
+    <div id="twitch-embed"></div>
+    <iframe id="twitch-chat-embed" height="500" width="405"> </iframe>
+    <script>
+      const urlParams = new URLSearchParams(window.location.search)
+      const twitchID = urlParams.get('twitch-id')
+      const parent = urlParams.get('parent')
+      const placeholder = urlParams.get('placeholder')
+      const buttonText = urlParams.get('button-text')
+      const twitchIDForm = document.querySelector('#twitch-id')
+      const twitchCharForm = document.querySelector('#twitch-chat-embed')
+      const twitchButton = document.querySelector('#show-twitch')
+      twitchIDForm.value = twitchID
+      twitchIDForm.placeholder = placeholder
+      twitchButton.innerText = buttonText
+      const player = new Twitch.Player('twitch-embed', {
+        width: 400,
+        height: 240,
+        channel: twitchID,
+        parent: [parent],
+      })
+      twitchCharForm.src = `https://www.twitch.tv/embed/${twitchID}/chat?parent=${parent}`
+      console.log(player)
+      twitchButton.onclick = () => {
+        player.setChannel(twitchIDForm.value)
+        twitchCharForm.src = `https://www.twitch.tv/embed/${twitchIDForm.value}/chat?parent=${parent}`
+      }
+    </script>
+  </body>
+</html>
