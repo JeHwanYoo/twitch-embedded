@@ -47,6 +47,13 @@ window.addEventListener('DOMContentLoaded', () => {
 
   /** Find Live Stream */
   lTwitchButton.onclick = async () => {
+    const modalContent = document.querySelector('.modal-content')
+    if (checkboxDark.checked) {
+      modalContent.classList.add('bg-dark')
+    } else {
+      modalContent.classList.remove('bg-dark')
+    }
+
     if (!anchors) {
       const a = document.createElement('a')
       const linkText = document.createTextNode('로그인이 필요합니다.')
@@ -112,6 +119,15 @@ window.addEventListener('DOMContentLoaded', () => {
             modal.hide()
           }
           ul.appendChild(button)
+          if (checkboxDark.checked) {
+            button.classList.add('bg-dark')
+            button.classList.add('text-white')
+            button.classList.add('border-white')
+          } else {
+            button.classList.remove('bg-dark')
+            button.classList.remove('text-white')
+            button.classList.remove('border-white')
+          }
         })
 
         liveList.textContent = ''
