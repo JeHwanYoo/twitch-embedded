@@ -9,6 +9,7 @@ window.addEventListener('DOMContentLoaded', () => {
   const clinetID = '9bplcpum7fvmne0rol9cubfl4yy8xw'
   const dTwip = document.querySelector('#d-twip')
   const dToonation = document.querySelector('#d-toonation')
+  const checkboxDark = document.querySelector('#checkbox-dark')
 
   var modal = new bootstrap.Modal(document.getElementById('modal-stream'), {
     keyboard: false,
@@ -21,18 +22,24 @@ window.addEventListener('DOMContentLoaded', () => {
 
   /** Initailize Twitch Player */
   const player = new Twitch.Player('twitch-embed', {
-    width: 400,
+    width: 405,
     height: 240,
     channel: twitchIDForm.value,
     parent: [parent],
   })
-  twitchChatForm.src = `https://www.twitch.tv/embed/${twitchIDForm.value}/chat?parent=${parent}`
+  if (checkboxDark.checked)
+    twitchChatForm.src = `https://www.twitch.tv/embed/${twitchIDForm.value}/chat?parent=${parent}&darkpopout`
+  else
+    twitchChatForm.src = `https://www.twitch.tv/embed/${twitchIDForm.value}/chat?parent=${parent}`
   dTwip.href = `https://twip.kr/donate/${twitchIDForm.value}`
 
   /** Change Channel */
   twitchButton.onclick = () => {
     player.setChannel(twitchIDForm.value)
-    twitchChatForm.src = `https://www.twitch.tv/embed/${twitchIDForm.value}/chat?parent=${parent}`
+    if (checkboxDark.checked)
+      twitchChatForm.src = `https://www.twitch.tv/embed/${twitchIDForm.value}/chat?parent=${parent}&darkpopout`
+    else
+      twitchChatForm.src = `https://www.twitch.tv/embed/${twitchIDForm.value}/chat?parent=${parent}`
     localStorage.setItem('channel', twitchIDForm.value)
     dTwip.href = `https://twip.kr/donate/${twitchIDForm.value}`
     dToonation.href = `https://toon.at/donate/${twitchIDForm.value}`
@@ -95,7 +102,10 @@ window.addEventListener('DOMContentLoaded', () => {
           button.onclick = () => {
             twitchIDForm.value = v.user_login
             player.setChannel(v.user_login)
-            twitchChatForm.src = `https://www.twitch.tv/embed/${v.user_login}/chat?parent=${parent}`
+            if (checkboxDark.checked)
+              twitchChatForm.src = `https://www.twitch.tv/embed/${twitchIDForm.value}/chat?parent=${parent}&darkpopout`
+            else
+              twitchChatForm.src = `https://www.twitch.tv/embed/${twitchIDForm.value}/chat?parent=${parent}`
             localStorage.setItem('channel', v.user_login)
             dTwip.href = `https://twip.kr/donate/${v.user_login}`
             dToonation.href = `https://toon.at/donate/${v.user_login}`
