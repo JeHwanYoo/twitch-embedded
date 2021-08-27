@@ -1,166 +1,24 @@
-<!DOCTYPE html>
-<html lang="ko">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>twitch-embeded</title>
-    <style>
-      .wrap {
-        width: 425px !important;
-        margin: 0 !important;
-        margin-top: 5px !important;
-        margin-left: 5px !important;
-      }
-      #live-twtich {
-        width: 100%;
-      }
-      #notice {
-        height: 400px;
-      }
-      #frame {
-        height: 400px;
-      }
-    </style>
-    <script src="https://player.twitch.tv/js/embed/v1.js"></script>
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
-      crossorigin="anonymous"
-    />
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-      crossorigin="anonymous"
-    ></script>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <script src="dark.js"></script>
-    <script src="index.js"></script>
-  </head>
-  <body>
-    <div class="application">
-      <div
-        class="container-fluid wrap border border-2 rounded-3 my-0 mx-0"
-        id="container"
-      >
-        <div class="row">
-          <div class="col">
-            <div class="input-group my-2">
-              <img
-                src="favicon.png"
-                class="border border-2 border-warning"
-                width="39"
-                height="39"
-              />
-              <input
-                id="twitch-id"
-                class="form-control border-warning"
-                placeholder="시청할 트위치 ID 입력"
-              />
-              <button
-                id="show-twitch"
-                class="btn btn-warning text-dark fw-bold"
-                type="button"
-              >
-                시청하기
-              </button>
-            </div>
-          </div>
-        </div>
-        <div class="row mb-2">
-          <div class="col">
-            <button
-              id="live-twtich"
-              class="btn btn-warning text-dark fw-bold"
-              type="button"
-              data-bs-toggle="modal"
-              data-bs-target="#modal-stream"
-            >
-              구독 채널 불러오기
-            </button>
-          </div>
-        </div>
-        <!-- Bar menu 시작 -->
-        <div class="row mb-2">
-          <div class="col d-flex align-items-center">
-            <a id="d-twip" class="btn btn-link" target="_blank">트윕</a>
-            <a id="d-toonation" class="btn btn-link d-none" target="_blank">
-              투네이션
-            </a>
-            <button
-              class="btn btn-link"
-              target="_blank"
-              type="button"
-              data-bs-toggle="modal"
-              data-bs-target="#modal-notice"
-            >
-              공지사항
-            </button>
-            <div class="form-check form-switch px-5 pt-1">
-              <input
-                class="form-check-input"
-                type="checkbox"
-                id="checkbox-dark"
-              />
-              <label class="form-check-label" for="checkbox-dark">
-                다크 모드
-              </label>
-            </div>
-          </div>
-        </div>
-        <!-- Bar menu 끝-->
-        <div class="row">
-          <div class="col px-2">
-            <div id="twitch-embed"></div>
-            <iframe id="twitch-chat-embed" height="500" width="405"> </iframe>
-          </div>
-        </div>
-      </div>
-      <!-- modal start -->
-      <div class="modal fade" id="modal-stream" tabindex="-1">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title">생방송 중인 채널</h5>
-            </div>
-            <div class="modal-body" id="list-live">불러오는 중입니다...</div>
-            <div class="modal-footer">
-              <button
-                type="button"
-                class="btn btn-secondary"
-                data-bs-dismiss="modal"
-              >
-                Close
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- modal end -->
-      <!-- modal start -->
-      <div class="modal fade" id="modal-notice" tabindex="-1">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title text-dark">공지사항</h5>
-            </div>
-            <div class="modal-body" id="notice">
-              <iframe src="/notice.html" width="100%" id="frame"></iframe>
-            </div>
-            <div class="modal-footer">
-              <button
-                type="button"
-                class="btn btn-secondary"
-                data-bs-dismiss="modal"
-              >
-                Close
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- modal end -->
-    </div>
-  </body>
+<html>
+
+<head>
+  <!-- Twitch Embedded API -->
+  <script src="https://player.twitch.tv/js/embed/v1.js"></script>
+  <!-- Moment -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"
+    integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/locale/ko.min.js"
+    integrity="sha512-3kMAxw/DoCOkS6yQGfQsRY1FWknTEzdiz8DOwWoqf+eGRN45AmjS2Lggql50nCe9Q6m5su5dDZylflBY2YjABQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
+  <!-- Vue -->
+  <script src="v1.2/main.js" type="module"></script>
+</head>
+
+<body>
+  <div id="app"> </div>
+</body>
+
 </html>
