@@ -65,12 +65,12 @@ export default {
               <div class="mb-2" v-if="!selectMode && isLoaded">
                 <input :class="['form-control', darkBorder]" placeholder="스트리머 검색" v-model="query" />
               </div>
-              <div :class="['mb-2', 'd-flex', 'small', darkLink]" v-else-if="selectMode && isLoaded">
-                <button :class="['btn', darkButton, darkFont, darkBorder]" @click="back">뒤로</button>
-                <button :class="['btn', 'btn-link', darkLink]" @click="setVideoFilter('all')">전체</button>
-                <button :class="['btn', 'btn-link', darkLink]" @click="setVideoFilter('archive')">지난방송</button>
-                <button :class="['btn', 'btn-link', darkLink]" @click="setVideoFilter('highlight')">하이라이트</button>
-                <button :class="['btn', 'btn-link', darkLink]" @click="setVideoFilter('upload')">업로드</button>
+              <div :class="['mb-2', 'd-flex', darkLink]" v-else-if="selectMode && isLoaded">
+                <button :class="['btn', darkButton, 'btn-sm', darkFont, darkBorder]" @click="back">뒤로</button>
+                <button :class="['btn', 'btn-link', 'btn-sm', darkLink]" @click="setVideoFilter('all')">전체</button>
+                <button :class="['btn', 'btn-link', 'btn-sm', darkLink]" @click="setVideoFilter('archive')">지난방송</button>
+                <button :class="['btn', 'btn-link', 'btn-sm', darkLink]" @click="setVideoFilter('highlight')">하이라이트</button>
+                <button :class="['btn', 'btn-link', 'btn-sm', darkLink]" @click="setVideoFilter('upload')">업로드</button>
               </div>
               <ul id="follow-list" :class="['list-group', 'w-100']"> 
                 <template v-if="!isLoggedIn"> 
