@@ -5,7 +5,7 @@ export default {
     <div class="container p-0">
       <div class="row p-0">
 
-        <div class="col d-flex align-items-center">
+        <div class="col d-flex align-items-center small">
           <a id="d-twip" class="btn btn-link" target="_blank" :href="twipLink">트윕</a>
 
           <button class="btn btn-link" @click="getFollowed"> 다시보기 </button>
@@ -111,7 +111,7 @@ export default {
   props: {
     darked: Boolean,
     streamerId: String,
-    clientId: String, 
+    clientId: String,
     authData: Object,
     getUser: Function,
   },
@@ -141,14 +141,16 @@ export default {
       return this.authData.access_token
     },
     filteredFollowed() {
-      return this.query === '' ? this.followed : this.followed.filter(v => v.to_name.includes(this.query))
+      return this.query === ''
+        ? this.followed
+        : this.followed.filter(v => v.to_name.includes(this.query))
     },
     filteredVideos() {
-      if (this.videoFilter === 'all') return this.videos 
+      if (this.videoFilter === 'all') return this.videos
       else return this.videos.filter(v => v.type === this.videoFilter)
     },
   },
-  data () {
+  data() {
     return {
       darkedModel: false,
       videoModal: null,
@@ -165,7 +167,7 @@ export default {
   watch: {
     darked(newVal) {
       this.darkedModel = newVal
-    }
+    },
   },
   filters: {
     date(value) {
@@ -173,8 +175,12 @@ export default {
     },
     thumbnail(value) {
       const thumbnailSize = '30'
-      return value ? value.replace('{width}', thumbnailSize).replace('{height}', thumbnailSize) : `https://via.placeholder.com/${thumbnailSize}`
-    }
+      return value
+        ? value
+            .replace('{width}', thumbnailSize)
+            .replace('{height}', thumbnailSize)
+        : `https://via.placeholder.com/${thumbnailSize}`
+    },
   },
   methods: {
     changeDarkMode() {
@@ -189,9 +195,9 @@ export default {
     },
     typeToKor(type) {
       return {
-        'archive': '지난방송',
-        'upload': '업로드',
-        'highlight': '하이라이트',
+        archive: '지난방송',
+        upload: '업로드',
+        highlight: '하이라이트',
       }[type]
     },
     setVideoFilter(filter) {
@@ -220,7 +226,7 @@ export default {
             headers: {
               Authorization: `Bearer ${this.accessToken}`,
               'Client-Id': this.clientId,
-            }
+            },
           })
 
           const json = await response.json()
@@ -235,8 +241,7 @@ export default {
         }
 
         this.isLoaded = true
-      }
-      catch (error) {
+      } catch (error) {
         this.isLoaded = true
         this.videos = []
         this.error = true
@@ -249,16 +254,16 @@ export default {
       if (this.isLoggedIn) {
         this.isLoaded = false
         this.followed = []
-        
+
         try {
           const user = await this.getUser()
-          
+
           if (user === null) {
             this.isLoaded = true
             this.videos = []
             return
           }
-          
+
           let done = false
           const url = `https://api.twitch.tv/helix/users/follows?from_id=${user.id}&first=100`
           let after = ''
@@ -267,7 +272,7 @@ export default {
               headers: {
                 Authorization: `Bearer ${this.accessToken}`,
                 'Client-Id': this.clientId,
-              }
+              },
             })
 
             const json = await response.json()
@@ -282,8 +287,7 @@ export default {
           }
 
           this.isLoaded = true
-        }
-        catch (error) {
+        } catch (error) {
           this.isLoaded = true
           this.followed = []
           this.error = true
@@ -297,7 +301,7 @@ export default {
     this.videoModal = new Modal(document.getElementById('modal-video'), {
       keyboard: false,
     })
-  }
+  },
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -314,7 +318,7 @@ document.addEventListener('DOMContentLoaded', () => {
    */
   const followList = document.getElementById('follow-list')
 
-  modalBody.forEach(v => v.style.height = '450px')
+  modalBody.forEach(v => (v.style.height = '450px'))
   followList.style.maxHeight = '360px'
   followList.style.overflowY = 'auto'
   frame.style.height = '400px'
