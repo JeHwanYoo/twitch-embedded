@@ -5,12 +5,12 @@ export default {
     <div class="container p-0">
       <div class="row p-0">
 
-        <div class="col d-flex align-items-center small">
-          <a id="d-twip" class="btn btn-link" target="_blank" :href="twipLink">트윕</a>
+        <div :class="['col', 'd-flex', 'align-items-center', 'small']">
+          <a id="d-twip" :class="['btn', 'btn-link', darkLink]" target="_blank" :href="twipLink">트윕</a>
 
-          <button class="btn btn-link" @click="getFollowed"> 다시보기 </button>
+          <button :class="['btn', 'btn-link', darkLink]" @click="getFollowed"> 다시보기 </button>
 
-          <button class="btn btn-link" type="button" data-bs-toggle="modal" data-bs-target="#modal-notice">
+          <button :class="['btn', 'btn-link', darkLink]" type="button" data-bs-toggle="modal" data-bs-target="#modal-notice">
             공지사항
           </button>
 
@@ -65,16 +65,16 @@ export default {
               <div class="mb-2" v-if="!selectMode && isLoaded">
                 <input :class="['form-control', darkBorder]" placeholder="스트리머 검색" v-model="query" />
               </div>
-              <div class="mb-2 d-flex" v-else-if="selectMode && isLoaded">
+              <div :class="['mb-2', 'd-flex', darkLink]" v-else-if="selectMode && isLoaded">
                 <button :class="['btn', darkButton, darkFont, darkBorder]" @click="back">뒤로</button>
-                <button :class="['btn', 'btn-link']" @click="setVideoFilter('all')">전체</button>
-                <button :class="['btn', 'btn-link']" @click="setVideoFilter('archive')">지난방송</button>
-                <button :class="['btn', 'btn-link']" @click="setVideoFilter('highlight')">하이라이트</button>
-                <button :class="['btn', 'btn-link']" @click="setVideoFilter('upload')">업로드</button>
+                <button :class="['btn', 'btn-link', darkLink]" @click="setVideoFilter('all')">전체</button>
+                <button :class="['btn', 'btn-link', darkLink]" @click="setVideoFilter('archive')">지난방송</button>
+                <button :class="['btn', 'btn-link', darkLink]" @click="setVideoFilter('highlight')">하이라이트</button>
+                <button :class="['btn', 'btn-link', darkLink]" @click="setVideoFilter('upload')">업로드</button>
               </div>
               <ul id="follow-list" :class="['list-group', 'w-100']"> 
                 <template v-if="!isLoggedIn"> 
-                  <a :href="loginURL"> 로그인이 필요합니다. </a>
+                  <a :class="['btn', 'btn-link', darkLink]" :href="loginURL"> 로그인이 필요합니다. </a>
                 </template>
                 <template v-else-if="!isLoaded"> 불러오는 중입니다... </template>
                 <template v-else-if="error">
@@ -118,6 +118,9 @@ export default {
   computed: {
     twipLink() {
       return `https://twip.kr/donate/${this.streamerId}`
+    },
+    darkLink() {
+      return this.darked ? 'text-white' : ''
     },
     darkFont() {
       return this.darked ? 'text-white' : 'text-dark'

@@ -16,7 +16,7 @@ export default {
             <div class="modal-body">
               <ul id="live-list" :class="['list-group', 'w-100']"> 
                 <template v-if="!isLoggedIn"> 
-                  <a :href="loginURL"> 로그인이 필요합니다. </a>
+                  <a :class="['btn', 'btn-link', darkLink]" :href="loginURL"> 로그인이 필요합니다. </a>
                 </template>
                 <template v-else-if="!isLoaded"> 불러오는 중입니다... </template>
                 <template v-else-if="!error">
@@ -41,10 +41,10 @@ export default {
     </div>
   `,
   props: {
-    darked: Boolean, 
-    clientId: String, 
+    darked: Boolean,
+    clientId: String,
     authData: Object,
-    getUser: Function
+    getUser: Function,
   },
   computed: {
     isLoggedIn() {
@@ -68,6 +68,9 @@ export default {
     darkBackground() {
       return this.darked ? 'bg-dark' : ''
     },
+    darkLink() {
+      return this.darked ? 'text-white' : ''
+    },
   },
   data() {
     return {
@@ -81,27 +84,29 @@ export default {
   methods: {
     async getFollowed() {
       this.modal.show()
-     if (this.isLoggedIn) {
+      if (this.isLoggedIn) {
         this.isLoaded = false
-        
+
         try {
           const user = await this.getUser()
 
-          if (user === null) return 
-          
-          const response = await fetch(`https://api.twitch.tv/helix/streams/followed?user_id=${user.id}`, {
-            headers: {
-              Authorization: `Bearer ${this.accessToken}`,
-              'Client-Id': this.clientId,
-            }
-          })
+          if (user === null) return
+
+          const response = await fetch(
+            `https://api.twitch.tv/helix/streams/followed?user_id=${user.id}`,
+            {
+              headers: {
+                Authorization: `Bearer ${this.accessToken}`,
+                'Client-Id': this.clientId,
+              },
+            },
+          )
 
           const json = await response.json()
           this.isLoaded = true
 
           this.followed = json.data
-        }
-        catch (error) {
+        } catch (error) {
           this.isLoaded = true
           this.followed = []
           this.error = true
@@ -115,7 +120,7 @@ export default {
     changeChannel(streamerId) {
       this.modal.hide()
       this.$emit('changed', {
-        streamerId
+        streamerId,
       })
     },
   },
@@ -130,7 +135,9 @@ document.addEventListener('DOMContentLoaded', () => {
   /**
    * @type { HTMLButtonElement }
    */
-  const twitchGetFollowedButton = document.getElementById('twitch-get-followed-button')
+  const twitchGetFollowedButton = document.getElementById(
+    'twitch-get-followed-button',
+  )
   /**
    * @type { HTMLUListElement }
    */
